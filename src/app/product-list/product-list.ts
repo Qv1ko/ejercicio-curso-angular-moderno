@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../shared/services/api.service';
+import { CartService } from '../shared/services/cart.service';
 import { Product } from '../shared/domain/product.type';
 import { Sport } from '../shared/domain/sport.type';
 
@@ -23,12 +24,12 @@ import { Sport } from '../shared/domain/sport.type';
 })
 export class ProductList implements OnInit {
   private readonly api = inject(ApiService);
+  protected readonly cart = inject(CartService);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly products = signal<Product[]>([]);
   protected readonly sports = signal<Sport[]>([]);
   protected readonly selectedSportId = signal<number | null>(null);
-  protected readonly cartCount = signal(0);
   protected readonly isLoading = signal(true);
   protected readonly hasError = signal(false);
 
@@ -36,10 +37,13 @@ export class ProductList implements OnInit {
     const sportId = this.selectedSportId();
     return sportId === null
       ? this.products()
-      : this.products().filter((product) => product.categoria_id === sportId);
+      : this.products().filter(
+          (product) => product.categoria_id.toString() === sportId.toString(),
+        );
   });
 
   ngOnInit(): void {
+    this.cart.load();
     this.api
       .getProducts()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -66,7 +70,7 @@ export class ProductList implements OnInit {
 
   protected addToCart(product: Product): void {
     if (product.stock > 0) {
-      this.cartCount.update((count) => count + 1);
+      this.cart.add(product);
     }
   }
 }

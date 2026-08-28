@@ -90,10 +90,32 @@
   padding: 0.5rem 0;
 }
 
+.cart-icon-wrap {
+  display: inline-flex;
+  position: relative;
+}
+
 .cart-icon {
   filter: brightness(0) saturate(100%);
   height: 18px;
   width: 22px;
+}
+
+.cart-count {
+  align-items: center;
+  background: var(--acid);
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  display: inline-flex;
+  font-size: 0.58rem;
+  font-weight: 800;
+  height: 17px;
+  justify-content: center;
+  line-height: 1;
+  min-width: 17px;
+  position: absolute;
+  right: -9px;
+  top: -9px;
 }
 
 .catalog-layout {
