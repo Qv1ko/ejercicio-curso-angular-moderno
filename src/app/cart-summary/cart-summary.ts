@@ -1,8 +1,17 @@
 import { CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CartService } from '../shared/services/cart.service';
 import { CartItem } from '../shared/domain/cart-item.type';
+import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,8 +22,9 @@ import { CartItem } from '../shared/domain/cart-item.type';
 })
 export class CartSummary implements OnInit {
   protected readonly cart = inject(CartService);
+  private readonly router = inject(Router);
+  private readonly notification = inject(NotificationService);
   protected readonly isPurchasing = signal(false);
-  protected readonly purchaseCompleted = signal(false);
 
   protected readonly subtotal = computed(() =>
     this.cart.items().reduce((total, item) => total + item.producto.precio, 0),
@@ -42,27 +52,31 @@ export class CartSummary implements OnInit {
 
     this.isPurchasing.set(true);
     this.cart.hasError.set(false);
-    this.cart.checkout({
-      fecha: new Date().toISOString(),
-      productos: this.cart.items().map(({ producto }) => producto),
-      subtotal: this.subtotal(),
-      gastos_transporte: this.shipping(),
-      total: this.total(),
-    }).subscribe({
-      next: () => this.cart.clear().subscribe({
-        next: () => {
-          this.isPurchasing.set(false);
-          this.purchaseCompleted.set(true);
-        },
+    this.cart
+      .checkout({
+        fecha: new Date().toISOString(),
+        productos: this.cart.items().map(({ producto }) => producto),
+        subtotal: this.subtotal(),
+        gastos_transporte: this.shipping(),
+        total: this.total(),
+      })
+      .subscribe({
+        next: () =>
+          this.cart.clear().subscribe({
+            next: () => {
+              this.isPurchasing.set(false);
+              this.notification.show('Compra realizada correctamente.');
+              void this.router.navigateByUrl('/');
+            },
+            error: () => {
+              this.isPurchasing.set(false);
+              this.cart.hasError.set(true);
+            },
+          }),
         error: () => {
           this.isPurchasing.set(false);
           this.cart.hasError.set(true);
         },
-      }),
-      error: () => {
-        this.isPurchasing.set(false);
-        this.cart.hasError.set(true);
-      },
-    });
+      });
   }
 }

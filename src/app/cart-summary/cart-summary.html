@@ -4,14 +4,18 @@
       <span class="brand-mark" aria-hidden="true"><img src="/icon.svg" alt="" /></span>
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
-    <a class="back-link" routerLink="/">Seguir comprando <span aria-hidden="true">↗</span></a>
+    <a class="back-link" routerLink="/">
+      <span>Seguir comprando</span>
+      <img class="back-arrow" src="/arrow-up-right.svg" alt="" aria-hidden="true" />
+    </a>
   </header>
 
   <section class="cart-content" aria-labelledby="cart-title">
     <div class="cart-intro">
       <p class="eyebrow">Resumen de compra</p>
-      <h1 id="cart-title">Tu carrito<span class="brand-dot">.</span></h1>
-      <p class="cart-count">{{ cart.count() }} {{ cart.count() === 1 ? 'producto' : 'productos' }}</p>
+      <p class="cart-count">
+        {{ cart.count() }} {{ cart.count() === 1 ? 'producto' : 'productos' }}
+      </p>
     </div>
 
     @if (cart.isLoading()) {
@@ -23,7 +27,6 @@
     } @else if (cart.items().length === 0) {
     <div class="empty-cart">
       <p>Tu carrito está esperando una aventura.</p>
-      <a class="primary-link" routerLink="/">Explorar equipo <span aria-hidden="true">↗</span></a>
     </div>
     } @else {
     <div class="cart-layout">
@@ -42,32 +45,38 @@
             [attr.aria-label]="'Eliminar ' + item.producto.nombre + ' del carrito'"
             (click)="removeItem(item)"
           >
-            Eliminar
+            <img class="trash-icon" src="/trash.svg" alt="" aria-hidden="true" />
           </button>
         </article>
         }
       </div>
 
       <aside class="cart-totals" aria-label="Totales de la compra">
-        <div class="total-row"><span>Subtotal</span><strong>{{ subtotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
-        <div class="total-row"><span>Transporte</span><strong>{{ shipping() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
+        <div class="total-row">
+          <span>Subtotal</span
+          ><strong>{{ subtotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+        </div>
+        <div class="total-row">
+          <span>Transporte</span
+          ><strong>{{ shipping() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+        </div>
         <p class="shipping-note">
-          @if (shipping() === 0) { Envío gratuito por compras superiores a 100 €. }
-          @else if (shipping() === 5) { Envío reducido para compras desde 50 €. }
-          @else { Gastos de transporte para compras inferiores a 50 €. }
+          @if (shipping() === 0) { Envío gratuito por compras superiores a 100 €. } @else if
+          (shipping() === 5) { Envío reducido para compras desde 50 €. } @else { Gastos de
+          transporte para compras inferiores a 50 €. }
         </p>
-        <div class="grand-total total-row"><span>Total</span><strong>{{ total() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
-        <button class="checkout-button" type="button" [disabled]="isPurchasing()" (click)="finishPurchase()">
+        <div class="grand-total total-row">
+          <span>Total</span><strong>{{ total() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+        </div>
+        <button
+          class="checkout-button"
+          type="button"
+          [disabled]="isPurchasing()"
+          (click)="finishPurchase()"
+        >
           {{ isPurchasing() ? 'Procesando...' : 'Finalizar compra' }}
         </button>
       </aside>
-    </div>
-    }
-
-    @if (purchaseCompleted()) {
-    <div class="purchase-confirmation" role="status">
-      Compra realizada correctamente. Gracias por confiar en Cumbre.
-      <a class="primary-link" routerLink="/">Volver al catálogo</a>
     </div>
     }
   </section>

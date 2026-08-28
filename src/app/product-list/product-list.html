@@ -1,4 +1,8 @@
 <main class="catalog-shell">
+  @if (notification.message(); as message) {
+  <div class="toast" role="status">{{ message }}</div>
+  }
+
   <header class="site-header">
     <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
       <span class="brand-mark" aria-hidden="true">
@@ -6,8 +10,6 @@
       </span>
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
-
-    <p class="header-note">Equipo para ir más lejos</p>
 
     <button
       class="cart-button"

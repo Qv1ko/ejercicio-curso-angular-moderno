@@ -12,6 +12,7 @@ import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../shared/services/api.service';
 import { CartService } from '../shared/services/cart.service';
+import { NotificationService } from '../shared/services/notification.service';
 import { Product } from '../shared/domain/product.type';
 import { Sport } from '../shared/domain/sport.type';
 
@@ -25,6 +26,7 @@ import { Sport } from '../shared/domain/sport.type';
 export class ProductList implements OnInit {
   private readonly api = inject(ApiService);
   protected readonly cart = inject(CartService);
+  protected readonly notification = inject(NotificationService);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly products = signal<Product[]>([]);
@@ -37,9 +39,7 @@ export class ProductList implements OnInit {
     const sportId = this.selectedSportId();
     return sportId === null
       ? this.products()
-      : this.products().filter(
-          (product) => product.categoria_id.toString() === sportId.toString(),
-        );
+      : this.products().filter((product) => product.categoria_id.toString() === sportId.toString());
   });
 
   ngOnInit(): void {
