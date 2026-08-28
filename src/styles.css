@@ -49,7 +49,6 @@ body {
 }
 
 .brand-mark img {
-  filter: invert(91%) sepia(58%) saturate(610%) hue-rotate(22deg) brightness(106%);
   height: 13px;
   transform: rotate(-45deg);
   width: 13px;
