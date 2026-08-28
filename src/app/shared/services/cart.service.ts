@@ -1,4 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, forkJoin, of, switchMap, tap } from 'rxjs';
 import { Product } from '../domain/product.type';
 import { CartItem } from '../domain/cart-item.type';
 import { ApiService } from './api.service';
@@ -39,8 +40,18 @@ export class CartService {
 
   remove(item: CartItem): void {
     this.api.removeFromCart(item.id).subscribe({
-      next: () => this.items.update((items) => items.filter(({ id }) => id !== item.id)),
+      next: () =>
+        this.items.update((items) => items.filter(({ id }) => id.toString() !== item.id.toString())),
       error: () => this.hasError.set(true),
     });
+  }
+
+  clear(): Observable<void[]> {
+    const requests = this.items().map((item) => this.api.removeFromCart(item.id));
+    return (requests.length ? forkJoin(requests) : of([])).pipe(tap(() => this.items.set([])));
+  }
+
+  checkout(purchase: unknown): Observable<void[]> {
+    return this.api.createPurchase(purchase).pipe(switchMap(() => this.clear()));
   }
 }

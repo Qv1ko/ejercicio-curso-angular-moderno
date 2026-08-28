@@ -50,8 +50,24 @@
 
       <aside class="cart-totals" aria-label="Totales de la compra">
         <div class="total-row"><span>Subtotal</span><strong>{{ subtotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
-        <p class="shipping-note">Los gastos de transporte se calcularán al finalizar.</p>
+        <div class="total-row"><span>Transporte</span><strong>{{ shipping() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
+        <p class="shipping-note">
+          @if (shipping() === 0) { Envío gratuito por compras superiores a 100 €. }
+          @else if (shipping() === 5) { Envío reducido para compras desde 50 €. }
+          @else { Gastos de transporte para compras inferiores a 50 €. }
+        </p>
+        <div class="grand-total total-row"><span>Total</span><strong>{{ total() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
+        <button class="checkout-button" type="button" [disabled]="isPurchasing()" (click)="finishPurchase()">
+          {{ isPurchasing() ? 'Procesando...' : 'Finalizar compra' }}
+        </button>
       </aside>
+    </div>
+    }
+
+    @if (purchaseCompleted()) {
+    <div class="purchase-confirmation" role="status">
+      Compra realizada correctamente. Gracias por confiar en Cumbre.
+      <a class="primary-link" routerLink="/">Volver al catálogo</a>
     </div>
     }
   </section>

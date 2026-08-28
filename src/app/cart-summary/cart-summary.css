@@ -135,6 +135,31 @@ h1 { font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.08em; line-height: 0.
 .total-row span { font-size: 0.78rem; }
 .total-row strong { font-size: 1.05rem; }
 .shipping-note { color: var(--muted); font-size: 0.72rem; line-height: 1.5; margin-top: 1.5rem; }
+.grand-total { border-top: 1px solid var(--line); margin-top: 1.5rem; padding-top: 1rem; }
+.grand-total strong { font-size: 1.35rem; }
+
+.checkout-button {
+  background: var(--ink);
+  border: 0;
+  color: var(--acid);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1rem;
+  width: 100%;
+}
+
+.checkout-button:hover:not(:disabled) { background: var(--rust); color: white; }
+.checkout-button:disabled { cursor: wait; opacity: 0.6; }
+
+.purchase-confirmation {
+  background: var(--acid);
+  margin-top: 2rem;
+  padding: 1.2rem;
+}
+
+.purchase-confirmation .primary-link { display: block; margin-top: 0.8rem; }
 
 .empty-cart,
 .status-message { border: 1px dashed var(--line); color: var(--muted); padding: 4rem 1rem; text-align: center; }
