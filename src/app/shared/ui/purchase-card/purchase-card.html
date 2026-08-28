@@ -18,6 +18,8 @@
   </ul>
   <footer class="purchase-card-footer">
     <span>Subtotal {{ purchase().subtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-    <span>Transporte {{ purchase().gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+    <span
+      >Transporte {{ purchase().gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2' }}</span
+    >
   </footer>
 </article>

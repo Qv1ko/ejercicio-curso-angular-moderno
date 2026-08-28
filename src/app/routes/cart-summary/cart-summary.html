@@ -23,7 +23,7 @@
     </div>
     } @else {
     <div class="cart-layout">
-        <div class="cart-items" aria-label="Productos del carrito">
+      <div class="cart-items" aria-label="Productos del carrito">
         @for (item of cart.items(); track item.id) {
         <app-cart-item [item]="item" (remove)="removeItem($event)" />
         }
