@@ -1,0 +1,58 @@
+<main class="cart-shell">
+  <header class="cart-header">
+    <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
+      <span class="brand-mark" aria-hidden="true"><img src="/icon.svg" alt="" /></span>
+      <span>CUMBRE<span class="brand-dot">.</span></span>
+    </a>
+    <a class="back-link" routerLink="/">Seguir comprando <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <section class="cart-content" aria-labelledby="cart-title">
+    <div class="cart-intro">
+      <p class="eyebrow">Resumen de compra</p>
+      <h1 id="cart-title">Tu carrito<span class="brand-dot">.</span></h1>
+      <p class="cart-count">{{ cart.count() }} {{ cart.count() === 1 ? 'producto' : 'productos' }}</p>
+    </div>
+
+    @if (cart.isLoading()) {
+    <div class="status-message" role="status">Cargando carrito...</div>
+    } @else if (cart.hasError()) {
+    <div class="status-message error-message" role="alert">
+      No hemos podido actualizar el carrito. Comprueba que JSON Server está activo.
+    </div>
+    } @else if (cart.items().length === 0) {
+    <div class="empty-cart">
+      <p>Tu carrito está esperando una aventura.</p>
+      <a class="primary-link" routerLink="/">Explorar equipo <span aria-hidden="true">↗</span></a>
+    </div>
+    } @else {
+    <div class="cart-layout">
+      <div class="cart-items" aria-label="Productos del carrito">
+        @for (item of cart.items(); track item.id) {
+        <article class="cart-item">
+          <div class="item-marker" aria-hidden="true">{{ item.producto.nombre.charAt(0) }}</div>
+          <div class="item-details">
+            <h2>{{ item.producto.nombre }}</h2>
+            <p>{{ item.producto.descripcion }}</p>
+          </div>
+          <strong>{{ item.producto.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+          <button
+            class="remove-button"
+            type="button"
+            [attr.aria-label]="'Eliminar ' + item.producto.nombre + ' del carrito'"
+            (click)="removeItem(item)"
+          >
+            Eliminar
+          </button>
+        </article>
+        }
+      </div>
+
+      <aside class="cart-totals" aria-label="Totales de la compra">
+        <div class="total-row"><span>Subtotal</span><strong>{{ subtotal() | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong></div>
+        <p class="shipping-note">Los gastos de transporte se calcularán al finalizar.</p>
+      </aside>
+    </div>
+    }
+  </section>
+</main>
