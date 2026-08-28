@@ -1,0 +1,16 @@
+<article class="cart-item">
+  <div class="item-marker" aria-hidden="true">{{ item().producto.nombre.charAt(0) }}</div>
+  <div class="item-details">
+    <h2>{{ item().producto.nombre }}</h2>
+    <p>{{ item().producto.descripcion }}</p>
+  </div>
+  <strong>{{ item().producto.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+  <button
+    class="remove-button"
+    type="button"
+    [attr.aria-label]="'Eliminar ' + item().producto.nombre + ' del carrito'"
+    (click)="remove.emit(item())"
+  >
+    <img class="trash-icon" src="/trash.svg" alt="" aria-hidden="true" />
+  </button>
+</article>

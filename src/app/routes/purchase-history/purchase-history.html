@@ -1,53 +1,21 @@
 <main class="history-shell">
-  <header class="history-header">
-    <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
-      <span class="brand-mark" aria-hidden="true"><img src="/icon.svg" alt="" /></span>
-      <span>CUMBRE<span class="brand-dot">.</span></span>
-    </a>
-    <a class="back-link" routerLink="/">
-      <span>Listado de productos</span>
-      <img class="back-arrow" src="/arrow-up-right.svg" alt="" aria-hidden="true" />
-    </a>
-  </header>
+  <app-header mode="history" />
 
   <section class="history-content" aria-labelledby="history-title">
     @if (isLoading()) {
-    <div class="status-message" role="status">Cargando compras...</div>
+    <app-status-message message="Cargando compras..." />
     } @else if (hasError()) {
-    <div class="status-message error-message" role="alert">
-      No hemos podido cargar tus compras. Comprueba que JSON Server está activo.
-    </div>
+    <app-status-message
+      message="No hemos podido cargar tus compras. Comprueba que JSON Server está activo."
+      [error]="true"
+      role="alert"
+    />
     } @else if (purchases().length === 0) {
-    <div class="status-message" role="status">Todavía no has realizado ninguna compra.</div>
+    <app-status-message message="Todavía no has realizado ninguna compra." />
     } @else {
     <div class="purchase-list">
       @for (purchase of purchases(); track purchase.id) {
-      <article class="purchase-card">
-        <header class="purchase-card-header">
-          <div>
-            <p class="purchase-number">Compra {{ purchase.id }}</p>
-            <time [dateTime]="purchase.fecha.toString()">
-              {{ purchase.fecha | date: 'd MMMM yyyy, HH:mm' }}
-            </time>
-          </div>
-          <strong>{{ purchase.total | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
-        </header>
-        <ul class="purchase-products">
-          @for (product of purchase.productos; track product.id) {
-          <li>
-            <span>{{ product.nombre }}</span
-            ><span>{{ product.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-          </li>
-          }
-        </ul>
-        <footer class="purchase-card-footer">
-          <span>Subtotal {{ purchase.subtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-          <span
-            >Transporte {{ purchase.gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2'
-            }}</span
-          >
-        </footer>
-      </article>
+      <app-purchase-card [purchase]="purchase" />
       }
     </div>
     }

@@ -1,0 +1,32 @@
+<article class="product-card">
+  <div class="product-visual" [class.sold-out]="product().stock === 0">
+    <span class="product-index">{{ product().id.toString().padStart(2, '0') }}</span>
+    <span class="product-glyph" aria-hidden="true">{{ product().nombre.charAt(0) }}</span>
+    @if (product().stock === 0) {
+    <span class="stock-tag">Agotado</span>
+    } @else if (product().stock === 1) {
+    <span class="stock-tag last-unit">Última unidad</span>
+    }
+  </div>
+  <div class="product-info">
+    <div>
+      <h3>{{ product().nombre }}</h3>
+      <p>{{ product().descripcion }}</p>
+    </div>
+    <div class="product-purchase">
+      <strong>{{ product().precio | number: '1.2-2' }} €</strong>
+      <button
+        class="add-button"
+        type="button"
+        [disabled]="product().stock === 0"
+        [attr.aria-label]="'Añadir ' + product().nombre + ' al carrito'"
+        (click)="add.emit(product())"
+      >
+        <span>{{ product().stock === 0 ? 'No disponible' : 'Añadir' }}</span>
+        @if (product().stock > 0) {
+        <img class="add-icon" src="/plus.svg" alt="" aria-hidden="true" />
+        }
+      </button>
+    </div>
+  </div>
+</article>

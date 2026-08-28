@@ -7,15 +7,17 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
-import { CartItem } from '../../shared/domain/cart-item.type';
+import { CartItem as CartItemModel } from '../../shared/domain/cart-item.type';
 import { NotificationService } from '../../shared/services/notification.service';
+import { Header } from '../../core/components/header/header';
+import { CartItem } from '../../shared/ui/cart-item/cart-item';
+import { StatusMessage } from '../../shared/ui/status-message/status-message';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CurrencyPipe, RouterLink],
+  imports: [CurrencyPipe, Header, CartItem, StatusMessage],
   selector: 'app-cart-summary',
   styleUrl: './cart-summary.css',
   templateUrl: './cart-summary.html',
@@ -41,7 +43,7 @@ export class CartSummary implements OnInit {
     this.cart.load();
   }
 
-  protected removeItem(item: CartItem): void {
+  protected removeItem(item: CartItemModel): void {
     this.cart.remove(item).subscribe();
   }
 

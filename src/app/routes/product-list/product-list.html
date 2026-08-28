@@ -3,30 +3,7 @@
   <div class="toast" role="status">{{ message }}</div>
   }
 
-  <header class="site-header">
-    <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
-      <span class="brand-mark" aria-hidden="true">
-        <img src="/icon.svg" alt="" />
-      </span>
-      <span>CUMBRE<span class="brand-dot">.</span></span>
-    </a>
-
-    <nav class="header-actions" aria-label="Navegación de usuario">
-      <a class="purchases-link" routerLink="/compras">Últimas compras</a>
-      <button
-        class="cart-button"
-        type="button"
-        routerLink="/carrito"
-        [attr.aria-label]="'Ver carrito, ' + cart.count() + ' productos'"
-      >
-        <span class="cart-icon-wrap">
-          <img class="cart-icon" src="/cart-shopping.svg" alt="" aria-hidden="true" />
-          <span class="cart-count" aria-hidden="true">{{ cart.count() }}</span>
-        </span>
-        <span class="cart-label">Mi carrito</span>
-      </button>
-    </nav>
-  </header>
+  <app-header [cartCount]="cart.count()" />
 
   <div class="catalog-layout">
     <aside class="filters" aria-label="Filtrar por categoría">
@@ -60,48 +37,19 @@
 
     <section class="products-section" aria-labelledby="products-title">
       @if (isLoading()) {
-      <div class="status-message" role="status">Cargando equipo...</div>
+      <app-status-message message="Cargando equipo..." />
       } @else if (hasError()) {
-      <div class="status-message error-message" role="alert">
-        No hemos podido cargar la colección. Comprueba que JSON Server está activo.
-      </div>
+      <app-status-message
+        message="No hemos podido cargar la colección. Comprueba que JSON Server está activo."
+        [error]="true"
+        role="alert"
+      />
       } @else if (filteredProducts().length === 0) {
-      <div class="status-message" role="status">No hay productos en esta categoría.</div>
+      <app-status-message message="No hay productos en esta categoría." />
       } @else {
       <div class="product-grid">
         @for (product of filteredProducts(); track product.id) {
-        <article class="product-card">
-          <div class="product-visual" [class.sold-out]="product.stock === 0">
-            <span class="product-index">{{ product.id.toString().padStart(2, '0') }}</span>
-            <span class="product-glyph" aria-hidden="true"> {{ product.nombre.charAt(0) }} </span>
-            @if (product.stock === 0) {
-            <span class="stock-tag">Agotado</span>
-            } @else if (product.stock === 1) {
-            <span class="stock-tag last-unit">Última unidad</span>
-            }
-          </div>
-          <div class="product-info">
-            <div>
-              <h3>{{ product.nombre }}</h3>
-              <p>{{ product.descripcion }}</p>
-            </div>
-            <div class="product-purchase">
-              <strong>{{ product.precio | number: '1.2-2' }} €</strong>
-              <button
-                class="add-button"
-                type="button"
-                [disabled]="product.stock === 0"
-                [attr.aria-label]="'Añadir ' + product.nombre + ' al carrito'"
-                (click)="addToCart(product)"
-              >
-                <span>{{ product.stock === 0 ? 'No disponible' : 'Añadir' }}</span>
-                @if (product.stock > 0) {
-                <img class="add-icon" src="/plus.svg" alt="" aria-hidden="true" />
-                }
-              </button>
-            </div>
-          </div>
-        </article>
+        <app-product-card [product]="product" (add)="addToCart($event)" />
         }
       </div>
       }

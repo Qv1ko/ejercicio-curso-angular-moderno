@@ -1,12 +1,13 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { Order } from '../../shared/domain/order.type';
 import { ApiService } from '../../shared/services/api.service';
+import { Header } from '../../core/components/header/header';
+import { PurchaseCard } from '../../shared/ui/purchase-card/purchase-card';
+import { StatusMessage } from '../../shared/ui/status-message/status-message';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CurrencyPipe, DatePipe, RouterLink],
+  imports: [Header, PurchaseCard, StatusMessage],
   selector: 'app-purchase-history',
   styleUrl: './purchase-history.css',
   templateUrl: './purchase-history.html',

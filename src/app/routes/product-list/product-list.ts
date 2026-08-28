@@ -8,17 +8,18 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { ApiService } from '../../shared/services/api.service';
 import { CartService } from '../../shared/services/cart.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { Product } from '../../shared/domain/product.type';
 import { Sport } from '../../shared/domain/sport.type';
+import { Header } from '../../core/components/header/header';
+import { ProductCard } from '../../shared/ui/product-card/product-card';
+import { StatusMessage } from '../../shared/ui/status-message/status-message';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, RouterLink],
+  imports: [Header, ProductCard, StatusMessage],
   selector: 'app-product-list',
   styleUrl: './product-list.css',
   templateUrl: './product-list.html',

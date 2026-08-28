@@ -1,0 +1,23 @@
+<article class="purchase-card">
+  <header class="purchase-card-header">
+    <div>
+      <p class="purchase-number">Compra {{ purchase().id }}</p>
+      <time [dateTime]="purchase().fecha.toString()">
+        {{ purchase().fecha | date: 'd MMMM yyyy, HH:mm' }}
+      </time>
+    </div>
+    <strong>{{ purchase().total | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
+  </header>
+  <ul class="purchase-products">
+    @for (product of purchase().productos; track product.id) {
+    <li>
+      <span>{{ product.nombre }}</span>
+      <span>{{ product.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+    </li>
+    }
+  </ul>
+  <footer class="purchase-card-footer">
+    <span>Subtotal {{ purchase().subtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+    <span>Transporte {{ purchase().gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+  </footer>
+</article>

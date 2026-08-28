@@ -1,14 +1,5 @@
 <main class="cart-shell">
-  <header class="cart-header">
-    <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
-      <span class="brand-mark" aria-hidden="true"><img src="/icon.svg" alt="" /></span>
-      <span>CUMBRE<span class="brand-dot">.</span></span>
-    </a>
-    <a class="back-link" routerLink="/">
-      <span>Seguir comprando</span>
-      <img class="back-arrow" src="/arrow-up-right.svg" alt="" aria-hidden="true" />
-    </a>
-  </header>
+  <app-header mode="cart" />
 
   <section class="cart-content" aria-labelledby="cart-title">
     <div class="cart-intro">
@@ -19,35 +10,22 @@
     </div>
 
     @if (cart.isLoading()) {
-    <div class="status-message" role="status">Cargando carrito...</div>
+    <app-status-message message="Cargando carrito..." />
     } @else if (cart.hasError()) {
-    <div class="status-message error-message" role="alert">
-      No hemos podido actualizar el carrito. Comprueba que JSON Server está activo.
-    </div>
+    <app-status-message
+      message="No hemos podido actualizar el carrito. Comprueba que JSON Server está activo."
+      [error]="true"
+      role="alert"
+    />
     } @else if (cart.items().length === 0) {
     <div class="empty-cart">
       <p>Tu carrito está esperando una aventura.</p>
     </div>
     } @else {
     <div class="cart-layout">
-      <div class="cart-items" aria-label="Productos del carrito">
+        <div class="cart-items" aria-label="Productos del carrito">
         @for (item of cart.items(); track item.id) {
-        <article class="cart-item">
-          <div class="item-marker" aria-hidden="true">{{ item.producto.nombre.charAt(0) }}</div>
-          <div class="item-details">
-            <h2>{{ item.producto.nombre }}</h2>
-            <p>{{ item.producto.descripcion }}</p>
-          </div>
-          <strong>{{ item.producto.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</strong>
-          <button
-            class="remove-button"
-            type="button"
-            [attr.aria-label]="'Eliminar ' + item.producto.nombre + ' del carrito'"
-            (click)="removeItem(item)"
-          >
-            <img class="trash-icon" src="/trash.svg" alt="" aria-hidden="true" />
-          </button>
-        </article>
+        <app-cart-item [item]="item" (remove)="removeItem($event)" />
         }
       </div>
 
