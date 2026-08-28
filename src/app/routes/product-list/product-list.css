@@ -150,6 +150,7 @@
 .category-arrow {
   height: 11px;
   opacity: 0;
+  filter: invert(40%) sepia(36%) saturate(1200%) hue-rotate(325deg) brightness(87%);
   transition: opacity 180ms ease;
   width: 11px;
 }
