@@ -34,12 +34,18 @@
         </header>
         <ul class="purchase-products">
           @for (product of purchase.productos; track product.id) {
-          <li><span>{{ product.nombre }}</span><span>{{ product.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</span></li>
+          <li>
+            <span>{{ product.nombre }}</span
+            ><span>{{ product.precio | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+          </li>
           }
         </ul>
         <footer class="purchase-card-footer">
           <span>Subtotal {{ purchase.subtotal | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
-          <span>Transporte {{ purchase.gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>
+          <span
+            >Transporte {{ purchase.gastos_transporte | currency: 'EUR' : 'symbol' : '1.2-2'
+            }}</span
+          >
         </footer>
       </article>
       }

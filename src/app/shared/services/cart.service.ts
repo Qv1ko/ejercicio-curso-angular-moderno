@@ -48,8 +48,7 @@ export class CartService {
       switchMap(() => this.api.getProduct(item.producto.id)),
       switchMap((product) => this.api.updateProductStock(product.id, product.stock + 1)),
       tap({
-        next: () =>
-          this.items.update((items) => items.filter(({ id }) => id !== item.id)),
+        next: () => this.items.update((items) => items.filter(({ id }) => id !== item.id)),
         error: () => this.hasError.set(true),
       }),
     );
