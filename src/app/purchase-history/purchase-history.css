@@ -18,8 +18,10 @@
 .brand-mark img { height: 13px; transform: rotate(-45deg); width: 13px; }
 .brand-dot { color: var(--rust); }
 .back-link, .catalog-link { color: inherit; font-size: 0.78rem; text-decoration: none; }
+.back-link { align-items: center; display: inline-flex; gap: 0.45rem; }
+.back-arrow { filter: brightness(0) saturate(100%); flex: 0 0 auto; height: 14px; width: 14px; }
 .back-link:hover, .catalog-link:hover { color: var(--rust); }
-.history-content { padding-top: 4rem; }
+.back-link:hover .back-arrow { filter: invert(40%) sepia(36%) saturate(1200%) hue-rotate(325deg) brightness(87%); }
 .eyebrow { color: var(--rust); font-size: 0.7rem; letter-spacing: 0.1em; margin: 0 0 0.8rem; text-transform: uppercase; }
 .history-heading { align-items: end; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; padding-bottom: 2rem; }
 h1 { font-size: clamp(2.8rem, 7vw, 6.5rem); letter-spacing: -0.08em; line-height: 0.85; margin: 0; }
