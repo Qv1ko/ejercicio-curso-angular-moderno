@@ -4,16 +4,13 @@
       <span class="brand-mark" aria-hidden="true"><img src="/icon.svg" alt="" /></span>
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
-    <a class="back-link" routerLink="/carrito">Volver al carrito <span aria-hidden="true">↗</span></a>
+    <a class="back-link" routerLink="/">
+      <span>Listado de productos</span>
+      <img class="back-arrow" src="/arrow-up-right.svg" alt="" aria-hidden="true" />
+    </a>
   </header>
 
   <section class="history-content" aria-labelledby="history-title">
-    <p class="eyebrow">Tu recorrido</p>
-    <div class="history-heading">
-      <h1 id="history-title">Últimas compras<span class="brand-dot">.</span></h1>
-      <a class="catalog-link" routerLink="/">Explorar equipo <span aria-hidden="true">↗</span></a>
-    </div>
-
     @if (isLoading()) {
     <div class="status-message" role="status">Cargando compras...</div>
     } @else if (hasError()) {
