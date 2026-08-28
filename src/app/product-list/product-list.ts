@@ -70,7 +70,19 @@ export class ProductList implements OnInit {
 
   protected addToCart(product: Product): void {
     if (product.stock > 0) {
-      this.cart.add(product);
+      this.products.update((products) =>
+        products.map((current) =>
+          current.id === product.id ? { ...current, stock: current.stock - 1 } : current,
+        ),
+      );
+      this.cart.add(product).subscribe({
+        error: () =>
+          this.products.update((products) =>
+            products.map((current) =>
+              current.id === product.id ? { ...current, stock: current.stock + 1 } : current,
+            ),
+          ),
+      });
     }
   }
 }

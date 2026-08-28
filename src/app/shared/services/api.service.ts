@@ -14,6 +14,10 @@ export class ApiService {
     return this.get<Product[]>('productos');
   }
 
+  getProduct(id: number | string): Observable<Product> {
+    return this.http.get<Product>(this.resourceUrl('productos', id));
+  }
+
   getSports(): Observable<Sport[]> {
     return this.get<Sport[]>('deportes');
   }
@@ -24,6 +28,10 @@ export class ApiService {
 
   addToCart(product: Product): Observable<CartItem> {
     return this.http.post<CartItem>(this.resourceUrl('carrito'), { producto: product });
+  }
+
+  updateProductStock(id: number | string, stock: number): Observable<Product> {
+    return this.http.patch<Product>(this.resourceUrl('productos', id), { stock });
   }
 
   removeFromCart(id: number | string): Observable<void> {

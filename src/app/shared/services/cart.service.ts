@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, forkJoin, of, switchMap, tap } from 'rxjs';
+import { Observable, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { Product } from '../domain/product.type';
 import { CartItem } from '../domain/cart-item.type';
 import { ApiService } from './api.service';
@@ -28,22 +28,31 @@ export class CartService {
     });
   }
 
-  add(product: Product): void {
-    this.api.addToCart(product).subscribe({
-      next: (item) => {
-        this.items.update((items) => [...items, item]);
-        this.hasError.set(false);
-      },
-      error: () => this.hasError.set(true),
-    });
+  add(product: Product): Observable<CartItem> {
+    return this.api.addToCart(product).pipe(
+      switchMap((item) =>
+        this.api.updateProductStock(product.id, product.stock - 1).pipe(map(() => item)),
+      ),
+      tap({
+        next: (item) => {
+          this.items.update((items) => [...items, item]);
+          this.hasError.set(false);
+        },
+        error: () => this.hasError.set(true),
+      }),
+    );
   }
 
-  remove(item: CartItem): void {
-    this.api.removeFromCart(item.id).subscribe({
-      next: () =>
-        this.items.update((items) => items.filter(({ id }) => id.toString() !== item.id.toString())),
-      error: () => this.hasError.set(true),
-    });
+  remove(item: CartItem): Observable<Product> {
+    return this.api.removeFromCart(item.id).pipe(
+      switchMap(() => this.api.getProduct(item.producto.id)),
+      switchMap((product) => this.api.updateProductStock(product.id, product.stock + 1)),
+      tap({
+        next: () =>
+          this.items.update((items) => items.filter(({ id }) => id !== item.id)),
+        error: () => this.hasError.set(true),
+      }),
+    );
   }
 
   clear(): Observable<void[]> {

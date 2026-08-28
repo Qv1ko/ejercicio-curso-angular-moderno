@@ -42,7 +42,7 @@ export class CartSummary implements OnInit {
   }
 
   protected removeItem(item: CartItem): void {
-    this.cart.remove(item);
+    this.cart.remove(item).subscribe();
   }
 
   protected finishPurchase(): void {
