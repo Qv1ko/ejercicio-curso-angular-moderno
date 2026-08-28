@@ -10,11 +10,11 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiService } from '../shared/services/api.service';
-import { CartService } from '../shared/services/cart.service';
-import { NotificationService } from '../shared/services/notification.service';
-import { Product } from '../shared/domain/product.type';
-import { Sport } from '../shared/domain/sport.type';
+import { ApiService } from '../../shared/services/api.service';
+import { CartService } from '../../shared/services/cart.service';
+import { NotificationService } from '../../shared/services/notification.service';
+import { Product } from '../../shared/domain/product.type';
+import { Sport } from '../../shared/domain/sport.type';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,8 +1,8 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Order } from '../shared/domain/order.type';
-import { ApiService } from '../shared/services/api.service';
+import { Order } from '../../shared/domain/order.type';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

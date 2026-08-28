@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ProductList } from './product-list/product-list';
-import { CartSummary } from './cart-summary/cart-summary';
-import { PurchaseHistory } from './purchase-history/purchase-history';
+import { CartSummary } from './routes/cart-summary/cart-summary';
+import { ProductList } from './routes/product-list/product-list';
+import { PurchaseHistory } from './routes/purchase-history/purchase-history';
 
 export const routes: Routes = [
   { path: '', component: ProductList, title: 'Catálogo' },

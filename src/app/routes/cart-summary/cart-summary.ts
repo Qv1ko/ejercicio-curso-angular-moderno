@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
-import { CartService } from '../shared/services/cart.service';
-import { CartItem } from '../shared/domain/cart-item.type';
-import { NotificationService } from '../shared/services/notification.service';
+import { CartService } from '../../shared/services/cart.service';
+import { CartItem } from '../../shared/domain/cart-item.type';
+import { NotificationService } from '../../shared/services/notification.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
