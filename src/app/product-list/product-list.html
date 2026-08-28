@@ -1,7 +1,9 @@
 <main class="catalog-shell">
   <header class="site-header">
     <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
-      <span class="brand-mark" aria-hidden="true">↗</span>
+      <span class="brand-mark" aria-hidden="true">
+        <img src="/arrow-up-right.svg" alt="" />
+      </span>
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
 
@@ -12,21 +14,6 @@
       <span class="cart-count">{{ cartCount() }}</span>
     </button>
   </header>
-
-  <section class="hero" aria-labelledby="page-title">
-    <div class="hero-copy">
-      <p class="eyebrow">Colección 2026 / Outdoor essentials</p>
-      <h1 id="page-title">Sal ahí fuera<span>.</span></h1>
-      <p class="hero-description">
-        Material honesto para moverte, explorar y volver a por más. Diseñado para el camino que
-        todavía no conoces.
-      </p>
-    </div>
-    <div class="hero-stamp" aria-hidden="true">
-      <span>30</span>
-      <small>piezas<br />en la colección</small>
-    </div>
-  </section>
 
   <div class="catalog-layout">
     <aside class="filters" aria-label="Filtrar por categoría">
@@ -39,7 +26,7 @@
           (click)="selectSport(null)"
         >
           <span>Todo el equipo</span>
-          <span class="category-arrow">↗</span>
+          <img class="category-arrow" src="/arrow-up-right.svg" alt="" />
         </button>
         @for (sport of sports(); track sport.id) {
         <button
@@ -49,7 +36,7 @@
           (click)="selectSport(sport.id)"
         >
           <span>{{ sport.nombre }}</span>
-          <span class="category-arrow">↗</span>
+          <img class="category-arrow" src="/arrow-up-right.svg" alt="" />
         </button>
         }
       </nav>
@@ -57,14 +44,6 @@
     </aside>
 
     <section class="products-section" aria-labelledby="products-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Selección de la casa</p>
-          <h2 id="products-title">Todo lo que necesitas</h2>
-        </div>
-        <span class="product-total">{{ filteredProducts().length }} referencias</span>
-      </div>
-
       @if (isLoading()) {
       <div class="status-message" role="status">Cargando equipo...</div>
       } @else if (hasError()) {
@@ -102,7 +81,7 @@
               >
                 <span>{{ product.stock === 0 ? 'No disponible' : 'Añadir' }}</span>
                 @if (product.stock > 0) {
-                <span aria-hidden="true">+</span>
+                <img class="add-icon" src="/plus.svg" alt="" aria-hidden="true" />
                 }
               </button>
             </div>
