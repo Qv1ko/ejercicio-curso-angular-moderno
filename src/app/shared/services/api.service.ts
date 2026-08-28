@@ -21,28 +21,8 @@ export class ApiService {
     return this.http.get<T>(this.resourceUrl(resource));
   }
 
-  getById<T>(resource: string, id: string | number): Observable<T> {
-    return this.http.get<T>(this.resourceUrl(resource, id));
-  }
-
-  post<TResponse>(resource: string, body: unknown): Observable<TResponse> {
-    return this.http.post<TResponse>(this.resourceUrl(resource), body);
-  }
-
-  put<TResponse>(resource: string, id: string | number, body: unknown): Observable<TResponse> {
-    return this.http.put<TResponse>(this.resourceUrl(resource, id), body);
-  }
-
-  patch<TResponse>(resource: string, id: string | number, body: unknown): Observable<TResponse> {
-    return this.http.patch<TResponse>(this.resourceUrl(resource, id), body);
-  }
-
-  delete<TResponse = unknown>(resource: string, id: string | number): Observable<TResponse> {
-    return this.http.delete<TResponse>(this.resourceUrl(resource, id));
-  }
-
-  private resourceUrl(resource: string, id?: string | number): string {
+  private resourceUrl(resource: string): string {
     const path = resource.replace(/^\/+|\/+$/g, '');
-    return id === undefined ? `${this.apiUrl}/${path}` : `${this.apiUrl}/${path}/${id}`;
+    return `${this.apiUrl}/${path}`;
   }
 }
