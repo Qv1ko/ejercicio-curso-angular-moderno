@@ -1,3 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+:root {
+  --ink: #1e2924;
+  --muted: #68736b;
+  --line: #d6ddd4;
+  --paper: #f4f5ef;
+  --acid: #d7ed62;
+  --rust: #c75b3d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.brand {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  font-size: 1.15rem;
+  font-weight: 800;
+  gap: 0.55rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: var(--ink);
+  border-radius: 50%;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  transform: rotate(45deg);
+  width: 30px;
+}
+
+.brand-mark img {
+  filter: invert(91%) sepia(58%) saturate(610%) hue-rotate(22deg) brightness(106%);
+  height: 13px;
+  transform: rotate(-45deg);
+  width: 13px;
+}
+
+.brand-dot {
+  color: var(--rust);
+}
+
+.back-link {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  font-size: 0.78rem;
+  gap: 0.45rem;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--rust);
+}
+
+.back-arrow {
+  filter: brightness(0) saturate(100%);
+  flex: 0 0 auto;
+  height: 14px;
+  width: 14px;
+}
+
+.back-link:hover .back-arrow {
+  filter: invert(40%) sepia(36%) saturate(1200%) hue-rotate(325deg) brightness(87%);
+}
+
+.status-message {
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.error-message {
+  color: var(--rust);
+}
