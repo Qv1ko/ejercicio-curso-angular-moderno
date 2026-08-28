@@ -1,0 +1,116 @@
+<main class="catalog-shell">
+  <header class="site-header">
+    <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
+      <span class="brand-mark" aria-hidden="true">↗</span>
+      <span>CUMBRE<span class="brand-dot">.</span></span>
+    </a>
+
+    <p class="header-note">Equipo para ir más lejos</p>
+
+    <button class="cart-button" type="button" aria-label="Ver carrito">
+      <span class="cart-label">Mi carrito</span>
+      <span class="cart-count">{{ cartCount() }}</span>
+    </button>
+  </header>
+
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Colección 2026 / Outdoor essentials</p>
+      <h1 id="page-title">Sal ahí fuera<span>.</span></h1>
+      <p class="hero-description">
+        Material honesto para moverte, explorar y volver a por más. Diseñado para el camino que
+        todavía no conoces.
+      </p>
+    </div>
+    <div class="hero-stamp" aria-hidden="true">
+      <span>30</span>
+      <small>piezas<br />en la colección</small>
+    </div>
+  </section>
+
+  <div class="catalog-layout">
+    <aside class="filters" aria-label="Filtrar por categoría">
+      <p class="filter-title">Explora por actividad</p>
+      <nav class="category-list">
+        <button
+          class="category-button"
+          [class.active]="selectedSportId() === null"
+          type="button"
+          (click)="selectSport(null)"
+        >
+          <span>Todo el equipo</span>
+          <span class="category-arrow">↗</span>
+        </button>
+        @for (sport of sports(); track sport.id) {
+        <button
+          class="category-button"
+          [class.active]="selectedSportId() === sport.id"
+          type="button"
+          (click)="selectSport(sport.id)"
+        >
+          <span>{{ sport.nombre }}</span>
+          <span class="category-arrow">↗</span>
+        </button>
+        }
+      </nav>
+      <p class="filter-footnote">Envío gratuito<br />a partir de 100 €</p>
+    </aside>
+
+    <section class="products-section" aria-labelledby="products-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selección de la casa</p>
+          <h2 id="products-title">Todo lo que necesitas</h2>
+        </div>
+        <span class="product-total">{{ filteredProducts().length }} referencias</span>
+      </div>
+
+      @if (isLoading()) {
+      <div class="status-message" role="status">Cargando equipo...</div>
+      } @else if (hasError()) {
+      <div class="status-message error-message" role="alert">
+        No hemos podido cargar la colección. Comprueba que JSON Server está activo.
+      </div>
+      } @else if (filteredProducts().length === 0) {
+      <div class="status-message" role="status">No hay productos en esta categoría.</div>
+      } @else {
+      <div class="product-grid">
+        @for (product of filteredProducts(); track product.id) {
+        <article class="product-card">
+          <div class="product-visual" [class.sold-out]="product.stock === 0">
+            <span class="product-index">{{ product.id.toString().padStart(2, '0') }}</span>
+            <span class="product-glyph" aria-hidden="true"> {{ product.nombre.charAt(0) }} </span>
+            @if (product.stock === 0) {
+            <span class="stock-tag">Agotado</span>
+            } @else if (product.stock === 1) {
+            <span class="stock-tag last-unit">Última unidad</span>
+            }
+          </div>
+          <div class="product-info">
+            <div>
+              <h3>{{ product.nombre }}</h3>
+              <p>{{ product.descripcion }}</p>
+            </div>
+            <div class="product-purchase">
+              <strong>{{ product.precio | number: '1.2-2' }} €</strong>
+              <button
+                class="add-button"
+                type="button"
+                [disabled]="product.stock === 0"
+                [attr.aria-label]="'Añadir ' + product.nombre + ' al carrito'"
+                (click)="addToCart(product)"
+              >
+                <span>{{ product.stock === 0 ? 'No disponible' : 'Añadir' }}</span>
+                @if (product.stock > 0) {
+                <span aria-hidden="true">+</span>
+                }
+              </button>
+            </div>
+          </div>
+        </article>
+        }
+      </div>
+      }
+    </section>
+  </div>
+</main>
