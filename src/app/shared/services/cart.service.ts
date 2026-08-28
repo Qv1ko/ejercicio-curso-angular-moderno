@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { Observable, concatMap, from, map, switchMap, tap, toArray } from 'rxjs';
 import { Product } from '../domain/product.type';
 import { CartItem } from '../domain/cart-item.type';
 import { ApiService } from './api.service';
@@ -54,17 +54,16 @@ export class CartService {
     );
   }
 
-  clear(): Observable<void[]> {
-    return this.api.getCart().pipe(
-      switchMap((items) => {
-        const requests = items.map((item) => this.api.removeFromCart(item.id));
-        return requests.length ? forkJoin(requests) : of([]);
-      }),
+  clear(items = this.items()): Observable<void[]> {
+    return from(items).pipe(
+      concatMap((item) => this.api.removeFromCart(item.id)),
+      toArray(),
       tap(() => this.items.set([])),
     );
   }
 
   checkout(purchase: unknown): Observable<void[]> {
-    return this.api.createPurchase(purchase).pipe(switchMap(() => this.clear()));
+    const items = [...this.items()];
+    return this.api.createPurchase(purchase).pipe(switchMap(() => this.clear(items)));
   }
 }
