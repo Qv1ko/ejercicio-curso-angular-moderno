@@ -55,8 +55,13 @@ export class CartService {
   }
 
   clear(): Observable<void[]> {
-    const requests = this.items().map((item) => this.api.removeFromCart(item.id));
-    return (requests.length ? forkJoin(requests) : of([])).pipe(tap(() => this.items.set([])));
+    return this.api.getCart().pipe(
+      switchMap((items) => {
+        const requests = items.map((item) => this.api.removeFromCart(item.id));
+        return requests.length ? forkJoin(requests) : of([]);
+      }),
+      tap(() => this.items.set([])),
+    );
   }
 
   checkout(purchase: unknown): Observable<void[]> {

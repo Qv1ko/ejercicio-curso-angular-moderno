@@ -61,18 +61,11 @@ export class CartSummary implements OnInit {
         total: this.total(),
       })
       .subscribe({
-        next: () =>
-          this.cart.clear().subscribe({
-            next: () => {
-              this.isPurchasing.set(false);
-              this.notification.show('Compra realizada correctamente.');
-              void this.router.navigateByUrl('/');
-            },
-            error: () => {
-              this.isPurchasing.set(false);
-              this.cart.hasError.set(true);
-            },
-          }),
+        next: () => {
+          this.isPurchasing.set(false);
+          this.notification.show('Compra realizada correctamente.');
+          void this.router.navigateByUrl('/');
+        },
         error: () => {
           this.isPurchasing.set(false);
           this.cart.hasError.set(true);
