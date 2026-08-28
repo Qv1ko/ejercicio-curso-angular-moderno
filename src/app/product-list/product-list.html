@@ -11,18 +11,21 @@
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
 
-    <button
-      class="cart-button"
-      type="button"
-      routerLink="/carrito"
-      [attr.aria-label]="'Ver carrito, ' + cart.count() + ' productos'"
-    >
-      <span class="cart-icon-wrap">
-        <img class="cart-icon" src="/cart-shopping.svg" alt="" aria-hidden="true" />
-        <span class="cart-count" aria-hidden="true">{{ cart.count() }}</span>
-      </span>
-      <span class="cart-label">Mi carrito</span>
-    </button>
+    <nav class="header-actions" aria-label="Navegación de usuario">
+      <a class="purchases-link" routerLink="/compras">Últimas compras</a>
+      <button
+        class="cart-button"
+        type="button"
+        routerLink="/carrito"
+        [attr.aria-label]="'Ver carrito, ' + cart.count() + ' productos'"
+      >
+        <span class="cart-icon-wrap">
+          <img class="cart-icon" src="/cart-shopping.svg" alt="" aria-hidden="true" />
+          <span class="cart-count" aria-hidden="true">{{ cart.count() }}</span>
+        </span>
+        <span class="cart-label">Mi carrito</span>
+      </button>
+    </nav>
   </header>
 
   <div class="catalog-layout">

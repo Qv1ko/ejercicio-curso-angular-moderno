@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../domain/product.type';
 import { Sport } from '../domain/sport.type';
 import { CartItem } from '../domain/cart-item.type';
+import { Order } from '../domain/order.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -40,6 +41,10 @@ export class ApiService {
 
   createPurchase(purchase: unknown): Observable<unknown> {
     return this.http.post<unknown>(this.resourceUrl('compras'), purchase);
+  }
+
+  getPurchases(): Observable<Order[]> {
+    return this.get<Order[]>('compras');
   }
 
   get<T>(resource: string): Observable<T> {

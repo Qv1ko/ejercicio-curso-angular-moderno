@@ -102,6 +102,24 @@
   padding: 0.5rem 0;
 }
 
+.header-actions {
+  align-items: center;
+  display: flex;
+  gap: 1.5rem;
+  justify-self: end;
+}
+
+.purchases-link {
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.purchases-link:hover {
+  color: var(--rust);
+}
+
 .cart-icon-wrap {
   display: inline-flex;
   position: relative;
@@ -412,6 +430,9 @@
   }
   .header-note {
     display: none;
+  }
+  .header-actions {
+    gap: 0.8rem;
   }
   .site-header {
     grid-template-columns: 1fr 1fr;
