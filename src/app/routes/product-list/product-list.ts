@@ -13,7 +13,7 @@ import { CartService } from '../../shared/services/cart.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { Product } from '../../shared/domain/product.type';
 import { Sport } from '../../shared/domain/sport.type';
-import { Header } from '../../core/components/header/header';
+import { Header } from '../../core/header/header';
 import { ProductCard } from '../../shared/ui/product-card/product-card';
 import { StatusMessage } from '../../shared/ui/status-message/status-message';
 

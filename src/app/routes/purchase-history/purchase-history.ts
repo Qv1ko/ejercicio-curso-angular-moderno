@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Order } from '../../shared/domain/order.type';
 import { ApiService } from '../../shared/services/api.service';
-import { Header } from '../../core/components/header/header';
+import { Header } from '../../core/header/header';
 import { PurchaseCard } from '../../shared/ui/purchase-card/purchase-card';
 import { StatusMessage } from '../../shared/ui/status-message/status-message';
 

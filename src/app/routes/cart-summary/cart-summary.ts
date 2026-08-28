@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
 import { CartItem as CartItemModel } from '../../shared/domain/cart-item.type';
 import { NotificationService } from '../../shared/services/notification.service';
-import { Header } from '../../core/components/header/header';
+import { Header } from '../../core/header/header';
 import { CartItem } from '../../shared/ui/cart-item/cart-item';
 import { StatusMessage } from '../../shared/ui/status-message/status-message';
 
