@@ -2,26 +2,31 @@
   <header class="site-header">
     <a class="brand" routerLink="/" aria-label="Cumbre, página principal">
       <span class="brand-mark" aria-hidden="true">
-        <img src="/arrow-up-right.svg" alt="" />
+        <img src="/icon.svg" alt="" />
       </span>
       <span>CUMBRE<span class="brand-dot">.</span></span>
     </a>
 
     <p class="header-note">Equipo para ir más lejos</p>
 
-    <button class="cart-button" type="button" aria-label="Ver carrito">
+    <button
+      class="cart-button"
+      type="button"
+      [attr.aria-label]="'Ver carrito, ' + cartCount() + ' productos'"
+    >
+      <img class="cart-icon" src="/cart-shopping.svg" alt="" aria-hidden="true" />
       <span class="cart-label">Mi carrito</span>
-      <span class="cart-count">{{ cartCount() }}</span>
     </button>
   </header>
 
   <div class="catalog-layout">
     <aside class="filters" aria-label="Filtrar por categoría">
-      <p class="filter-title">Explora por actividad</p>
+      <p class="filter-title">Explora por categoría</p>
       <nav class="category-list">
         <button
           class="category-button"
           [class.active]="selectedSportId() === null"
+          [attr.aria-pressed]="selectedSportId() === null"
           type="button"
           (click)="selectSport(null)"
         >
@@ -32,6 +37,7 @@
         <button
           class="category-button"
           [class.active]="selectedSportId() === sport.id"
+          [attr.aria-pressed]="selectedSportId() === sport.id"
           type="button"
           (click)="selectSport(sport.id)"
         >
@@ -69,6 +75,7 @@
             <div>
               <h3>{{ product.nombre }}</h3>
               <p>{{ product.descripcion }}</p>
+              <p>{{ product.categoria_id }}</p>
             </div>
             <div class="product-purchase">
               <strong>{{ product.precio | number: '1.2-2' }} €</strong>
